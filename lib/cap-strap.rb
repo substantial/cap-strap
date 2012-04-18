@@ -1,28 +1,25 @@
 require "cap-strap/version"
 
-require "cap-strap/ext/rvm"
-require "cap-strap/ext/bootstrap"
-require "cap-strap/ext/chef-solo"
-require "cap-strap/ext/users"
+require 'capistrano'
 
-configuration = Capistrano::Configuration.respond_to?(:instance) ?
-  Capistrano::Configuration.instance(:must_exist) :
-  Capistrano.configuration(:must_exist)
 
-configuration.load do
+require 'cap-strap/helpers'
+require "cap-strap/recipes/rvm"
+require "cap-strap/recipes/bootstrap"
+require "cap-strap/recipes/users"
 
-  # User default settings
-  _cset :user, "deploy"
-  _cset :group, "rvm"
 
-  # RVM default settings
-  _cset :default_ruby , "1.9.3-p125"
-  _cset :gemset, "global"
-  _cset :rubies, []
+if instance = Capistrano::Configuration.instance
+  Capistrano::RVM.load_into(instance)
+  Capistrano::Bootstrap.load_into(instance)
+  Capistrano::Users.load_into(instance)
 
-  # Settings for bootstrap scripts to work
-  default_run_options[:shell] = '/bin/bash'
-  default_run_options[:pty] = true
-  ssh_options[:forward_agent] = true
+  instance.load do
+    # User default settings
+    _cset :user, "deploy"
+    _cset :group, "rvm"
 
+    # Settings for bootstrap scripts to work
+    ssh_options[:forward_agent] = true
+  end
 end
