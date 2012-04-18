@@ -1,9 +1,9 @@
 require "cap-strap/version"
 
-require "cap-strap/tasks/rvm"
-require "cap-strap/tasks/bootstrap"
-require "cap-strap/tasks/chef-solo"
-require "cap-strap/tasks/users"
+require "cap-strap/ext/rvm"
+require "cap-strap/ext/bootstrap"
+require "cap-strap/ext/chef-solo"
+require "cap-strap/ext/users"
 
 configuration = Capistrano::Configuration.respond_to?(:instance) ?
   Capistrano::Configuration.instance(:must_exist) :
