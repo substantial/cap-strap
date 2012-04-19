@@ -1,5 +1,4 @@
 require 'cap-strap/helpers'
-require 'cap-strap/helpers/rvm'
 
 module Capistrano
   module RVM
@@ -9,7 +8,7 @@ module Capistrano
         _cset :default_ruby , "1.9.3-p125"
         _cset :gemset, "global"
         _cset :rubies, []
-        _cset :user, "deploy"
+        _cset(:user) { capistrano::cli.ui.ask("bootstrap root user: ") }
 
         default_run_options[:shell] = '/bin/bash'
         default_run_options[:pty] = true
