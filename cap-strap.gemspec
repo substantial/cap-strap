@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = %q{Bootstrap a new machine for future Capistrano tasks.}
   s.description = %q{Add a deploy user, install RVM, desired rubies and gems.}
+  s.description = %q{Bootstrap a a machine. Add a deploy user, install RVM, desired rubies and gems.}
 
   s.rubyforge_project = "cap-strap"
 
