@@ -54,7 +54,11 @@ Note: Run from project root
  We're https://github.com/technicalpickles/capistrano-spec for testing the capistrano
 configuration.
 
-###TODO: Use Vagrant to test cap-strap.
+###Testing with Vagrant
+You may test cap-strap on vagrant by running `bundle exec rake vagrant_test`.
+
+Vagrant will fetch a lucid-64 box and boot it up. Once started, it will run
+cap bootstrap on the vagrant box.
 
 ## Contributing
 
