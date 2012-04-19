@@ -25,5 +25,9 @@ describe Capistrano::RVM do
     it "defaults to empty ruby set" do
       @configuration.fetch(:rubies).length.should be 0
     end
+
+    it "has bundler in it's global gems" do
+      @configuration.fetch(:global_gems).include?("bundler").should == true
+    end
   end
 end

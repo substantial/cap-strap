@@ -9,6 +9,7 @@ module Capistrano
         _cset :gemset, "global"
         _cset :rubies, []
         _cset(:user) { Capistrano::CLI.ui.ask("bootstrap root user: ") }
+        _cset :global_gems, ["bundler"]
 
         default_run_options[:shell] = '/bin/bash'
         default_run_options[:pty] = true
@@ -39,9 +40,10 @@ module Capistrano
                 ruby = rubie
                 ruby_patch = nil
               end
-
               install_ruby(ruby, ruby_patch)
-              install_global_gem(ruby, "bundler")
+              global_gems.each do |gem|
+                install_global_gem(ruby, gem)
+              end
             end
           end
 
