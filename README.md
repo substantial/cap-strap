@@ -46,6 +46,11 @@ Note: Run from project root
 
     $ cap <stage> bootstrap -s user=<root_username>
 
+## Testing
+
+ We're https://github.com/technicalpickles/capistrano-spec for testing the capistrano
+configuration
+
 ## Contributing
 
 1. Fork it
