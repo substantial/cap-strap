@@ -10,7 +10,7 @@ set :password, "vagrant"
 set :default_ruby, "1.9.3-p125"
 set :gemset, "build-agent"
 set :rubies, [ {
-                :version => "1.9.3-perf",
+                :version => "1.9.3-p125-perf",
                 :patch => "falcon,debug --force-autoconf -j 3"
               } ]
 
