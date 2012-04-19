@@ -24,6 +24,7 @@ module Capistrano
             bootstrap.upload_deploy_authorized_keys
             bootstrap.add_known_hosts
             bootstrap.add_rvm_to_sudoers
+            bootstrap.upload_deploy_key
           end
 
           task :create_deploy_user do
@@ -41,7 +42,7 @@ module Capistrano
               sudo "chown -R #{deploy_user}:rvm /home/#{deploy_user}/.ssh"
             rescue Exception => e
               puts e
-              puts "Make sure the deploy-key is located at config/deploy-key"
+              puts "Make sure your authoried_keys are located at config/authorized_keys"
             end
            end
 
@@ -57,6 +58,18 @@ module Capistrano
 
           task :install_rvm_dependencies do
             install_packages(rvm_packages)
+          end
+
+          desc "Uploads the id_rsa for the deploy user. Put the key under config/deploy-key and run."
+          task :upload_deploy_key do
+            begin
+              deploy_key_path = File.join(File.expand_path(File.dirname(__FILE__)), 'deploy-key')
+              id_rsa = File.read(deploy_key_path)
+              put(id_rsa, "/home/#{deploy_user}/.ssh/id_rsa", :mode => "0600")
+            rescue Exception => e
+              puts e
+              puts "Make sure the deploy-key is located at config/deploy-key"
+            end
           end
         end
       end
