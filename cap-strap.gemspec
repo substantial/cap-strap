@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Shaun Dern"]
   s.email       = ["shaun@substantial.com"]
   s.homepage    = ""
-  s.summary     = %q{Bootstrap a new machine with cap-strap, a Capistrano extension}
-  s.description = %q{Adds a deploy user and installs rvm and desired rubies.}
+  s.summary     = %q{Bootstrap a new machine for future Capistrano tasks.}
+  s.description = %q{Add a deploy user, install RVM, desired rubies and gems.}
 
   s.rubyforge_project = "cap-strap"
 
