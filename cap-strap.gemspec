@@ -21,6 +21,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "capistrano-spec","~> 0.1.0"
   s.add_development_dependency "rspec", "~> 2.9.0"
   s.add_development_dependency "guard-rspec", "~> 0.7.0"
+  s.add_development_dependency "vagrant", "~> 1.0.2"
+
 
   s.add_runtime_dependency "capistrano", ">= 2.0.0"
 end
