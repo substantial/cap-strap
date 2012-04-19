@@ -49,7 +49,9 @@ Note: Run from project root
 ## Testing
 
  We're https://github.com/technicalpickles/capistrano-spec for testing the capistrano
-configuration
+configuration.
+
+#TODO: Use Vagrant to test capistrano.
 
 ## Contributing
 
