@@ -31,7 +31,7 @@ module Capistrano
           end
 
           task :install_rubies do
-            rubies << default_ruby
+            rubies.unshift(default_ruby)
             rubies.each do |rubie|
               if rubie.is_a?(Hash)
                 ruby = rubie.fetch(:version)
