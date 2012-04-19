@@ -15,6 +15,9 @@ module Capistrano
 
         _cset(:deploy_user) { Capistrano::CLI.ui.ask("deploy user: ") }
         _cset(:user) { Capistrano::CLI.ui.ask("bootstrap root user: ") }
+        _cset(:authorized_keys_file) { Capistrano::CLI.ui.ask("Location of authorized keys to upload: ") }
+        _cset(:deploy_key_file) { Capistrano::CLI.ui.ask("Location of deploy key for upload: ") }
+        _cset(:known_hosts) { default_known_host }
 
         namespace :bootstrap do
           desc "bootstraps a fresh box."
@@ -33,8 +36,7 @@ module Capistrano
 
           task :upload_deploy_authorized_keys do
             begin
-              authorized_keys_path = File.join(File.expand_path(File.dirname(__FILE__)), 'authorized_keys')
-              authorized_keys = File.read(authorized_keys_path)
+              authorized_keys = File.read(authorized_keys_file)
               put(authorized_keys, "authorized_keys", :mode => "0600")
               sudo "mkdir -p /home/#{deploy_user}/.ssh"
               sudo "chmod 0700 /home/#{deploy_user}/.ssh"
@@ -42,7 +44,6 @@ module Capistrano
               sudo "chown -R #{deploy_user}:rvm /home/#{deploy_user}/.ssh"
             rescue Exception => e
               puts e
-              puts "Make sure your authoried_keys are located at config/authorized_keys"
             end
            end
 
@@ -63,12 +64,10 @@ module Capistrano
           desc "Uploads the id_rsa for the deploy user. Put the key under config/deploy-key and run."
           task :upload_deploy_key do
             begin
-              deploy_key_path = File.join(File.expand_path(File.dirname(__FILE__)), 'deploy-key')
-              id_rsa = File.read(deploy_key_path)
+              id_rsa = File.read(deploy_key_file)
               put(id_rsa, "/home/#{deploy_user}/.ssh/id_rsa", :mode => "0600")
             rescue Exception => e
               puts e
-              puts "Make sure the deploy-key is located at config/deploy-key"
             end
           end
         end
