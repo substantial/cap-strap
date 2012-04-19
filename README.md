@@ -31,7 +31,7 @@ Note: Paths are relative to the root
 * `set :authorized_keys_file, "<location of authorized keys>"`
 * `set :deploy_key_file, "<location of deploy-key>"`
 * `set :known_hosts, "<string of known hosts">` - Default is github.com
-* `set :default_ruby, "1.9.3-p125" - Default is 1.9.3-p125
+* `set :default_ruby, "1.9.3-p125"` - Default is 1.9.3-p125
 * `set :rubies, [
                   "ree-1.8.7-2012.02",
                   {
@@ -40,11 +40,11 @@ Note: Paths are relative to the root
                   }
                 ]`
 * `set :gemset, "<default gemset>"` - Default is global
-* `set :global_gems, ["bundler", "other-gem"] - Default is ["bundler"]
+* `set :global_gems, ["bundler", "other-gem"]` - Default is ["bundler"]
 
 Note: Run from project root
 
-  $ cap <stage> bootstrap -s user=<root_username>
+    $ cap <stage> bootstrap -s user=<root_username>
 
 ## Contributing
 
