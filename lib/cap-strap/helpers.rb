@@ -11,12 +11,35 @@ end
 def install_packages(packages)
   sudo "apt-get update"
   packages.each do |pkg|
-    sudo "apt-get -y install #{package}"
+    sudo "apt-get -y install #{pkg}"
   end
 end
 
-def create_user(user, primary_group, other_groups)
-  sudo "useradd -g #{primary_group} -G #{other_groups} -s /bin/bash -d /home/#{user} -m #{user}"
+def create_user(user)
+  unless user_exists?(user)
+    sudo "useradd -s /bin/bash -d /home/#{user} -m #{user}"
+  end
+end
+
+def add_group_to_sudoers(group)
+  unless group_has_sudo?(group)
+    puts "********* Adding #{group} to sudoers"
+    sudo "cp /etc/sudoers /etc/sudoers.bak"
+    sudo "chmod a+w /etc/sudoers.bak"
+    sudo "echo %rvm ALL=NOPASSWD:ALL >> /etc/sudoers.bak"
+    sudo "chmod a-w /etc/sudoers.bak"
+    sudo "mv /etc/sudoers.bak /etc/sudoers"
+  end
+end
+
+def group_has_sudo?(group)
+  sudoer_test = "sudo bash -c \"if grep -Fxq '%#{group} ALL=NOPASSWD:ALL' /etc/sudoers; then echo 'true'; else echo 'false'; fi\""
+  return capture(sudoer_test).include?("true")
+end
+
+def user_exists?(user)
+  user_test = "if id #{user} > /dev/null 2>&1; then echo 'true'; else echo 'false'; fi"
+  return capture(user_test).include?("true")
 end
 
 def default_known_hosts

@@ -31,7 +31,9 @@ module Capistrano
           end
 
           task :create_deploy_user do
-            create_user(deploy_user, "rvm", "admin")
+            create_user(deploy_user)
+            add_user_to_group(deploy_user, "rvm")
+            add_user_to_group(deploy_user, "admin")
           end
 
           task :upload_deploy_authorized_keys do
@@ -56,7 +58,7 @@ module Capistrano
            end
 
            task :add_rvm_to_sudoers do
-              sudo "echo %rvm ALL=NOPASSWD:ALL >> /etc/sudoers"
+             add_group_to_sudoers("rvm")
            end
 
           task :install_rvm_dependencies do
