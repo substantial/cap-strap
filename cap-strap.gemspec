@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "cap-strap/version"
 
 Gem::Specification.new do |s|
   s.name        = "cap-strap"
@@ -19,8 +18,9 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency "capistrano", '>= 2.0.0'
-  s.add_development_dependency "capistrano-spec"
-  s.add_development_dependency "rspec"
+  s.add_development_dependency "capistrano-spec","~> 0.1.0"
+  s.add_development_dependency "rspec", "~> 2.9.0"
+  s.add_development_dependency "guard-rspec", "~> 0.7.0"
 
   s.add_runtime_dependency "capistrano", ">= 2.0.0"
 end
