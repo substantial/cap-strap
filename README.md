@@ -1,19 +1,19 @@
-# CapStrap
+# cap-strap
 
-  CapStrap is a Capistrano Extension that bootstraps a machine for future capistrano tasks.
-It installs System-wide Rvm and specified rubies and gems. It will create a user for future capistrano
-deploy tasks.
+  cap-strap is a Capistrano Extension that bootstraps a machine for future capistrano tasks.
+It installs System-wide RVM and specified rubies and gems. It will create a deploy user, upload authorized_keys and
+deploy key.
 
 ## Notes
 
-Currently only Ubuntu 10.04 and 10.10 have been tested.
+Currently cap-strap has only been tested on Ubuntu 10.04 and 10.10.
 
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'cap-strap', :git => 'git@github.com:substantial/cap-strap.git'
+    gem 'cap-strap'
 
 And then execute:
 
