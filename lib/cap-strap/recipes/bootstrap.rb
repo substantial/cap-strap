@@ -1,5 +1,6 @@
 require 'cap-strap/helpers'
 require 'cap-strap/recipes/rvm'
+require 'capistrano/cli'
 
 module Capistrano
   module Bootstrap
@@ -12,8 +13,8 @@ module Capistrano
           libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf
           libc6-dev ncurses-dev automake libtool bison subversion )
 
-        _cset(:deploy_user) { capistrano::cli.ui.ask("deploy user: ") }
-        _cset(:user) { capistrano::cli.ui.ask("bootstrap root user: ") }
+        _cset(:deploy_user) { Capistrano::CLI.ui.ask("deploy user: ") }
+        _cset(:user) { Capistrano::CLI.ui.ask("bootstrap root user: ") }
 
         namespace :bootstrap do
           desc "bootstraps a fresh box."
@@ -62,4 +63,3 @@ module Capistrano
     end
   end
 end
-
