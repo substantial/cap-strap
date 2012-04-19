@@ -20,7 +20,7 @@ module Capistrano
         _cset(:known_hosts) { default_known_hosts }
 
         namespace :bootstrap do
-          desc "bootstraps a fresh box."
+          desc "Bootstraps a fresh box. Install RVM, create the deploy user, upload keys."
           task :default do
             rvm.default
             bootstrap.create_deploy_user
@@ -36,6 +36,8 @@ module Capistrano
             add_user_to_group(deploy_user, "admin")
           end
 
+          desc "Upload authorized keys for the deploy_user. Override by setting :authorized_keys_file. This
+          is the relative path from the project root"
           task :upload_deploy_authorized_keys do
             begin
               authorized_keys_path = File.join(File.expand_path(Dir.pwd), authorized_keys_file)

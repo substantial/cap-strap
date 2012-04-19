@@ -22,9 +22,12 @@ And then execute:
 ## Usage
 
 You will be prompted for the name of the future deploy_user, location of authorized keys and
-the deploy_key. Deploy key isn't required, and you may skip.
+the deploy user's deploy_key. Deploy key isn't required, and you may skip.
+
+You may re-run the deploy_key task by `$ cap <stage> bootstrap:upload_deploy_key`
 
 In your deploy.rb, you may override the following variables:
+
 Note: Paths are relative to the root
 
 * `set :deploy_user, "<name of user for future deployes>"`
