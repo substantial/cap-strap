@@ -4,12 +4,11 @@ require "cap-strap/version"
 
 Gem::Specification.new do |s|
   s.name        = "cap-strap"
-  s.version     = CapStrap::VERSION
+  s.version     = "0.0.2"
   s.authors     = ["Shaun Dern"]
   s.email       = ["shaun@substantial.com"]
   s.homepage    = ""
   s.summary     = %q{Bootstrap a new machine for future Capistrano tasks.}
-  s.description = %q{Add a deploy user, install RVM, desired rubies and gems.}
   s.description = %q{Bootstrap a a machine. Add a deploy user, install RVM, desired rubies and gems.}
 
   s.rubyforge_project = "cap-strap"
