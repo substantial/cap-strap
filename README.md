@@ -51,7 +51,7 @@ Note: Run from project root
  We're https://github.com/technicalpickles/capistrano-spec for testing the capistrano
 configuration.
 
-#TODO: Use Vagrant to test capistrano.
+###TODO: Use Vagrant to test cap-strap.
 
 ## Contributing
 
