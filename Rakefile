@@ -15,6 +15,13 @@ namespace :vagrant_test do
     %x[bundle exec cap bootstrap]
   end
 
+  task :restart => [:down, :up, :test]
+
+  task :down do
+    puts "Forcing vagrant shutdown"
+    %x[bundle exec vagrant destroy --force]
+  end
+
   task :up do
     puts "WARNING: This will take a while..."
     puts "Starting up vagrant"
