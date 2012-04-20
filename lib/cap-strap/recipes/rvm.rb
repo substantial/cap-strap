@@ -7,7 +7,7 @@ module Capistrano
 
         _cset :default_ruby , "1.9.3-p125"
         _cset :gemset, "global"
-        _cset :rubies, []
+        _cset :rubies, ["1.9.3-p125"]
         _cset(:user) { Capistrano::CLI.ui.ask("bootstrap root user: ") }
         _cset :global_gems, ["bundler"]
 
@@ -31,7 +31,6 @@ module Capistrano
           end
 
           task :install_rubies do
-            rubies.unshift(default_ruby)
             rubies.each do |rubie|
               if rubie.is_a?(Hash)
                 ruby = rubie.fetch(:version)
