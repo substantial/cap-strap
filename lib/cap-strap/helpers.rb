@@ -49,8 +49,8 @@ TEXT
 end
 
 def ruby_installed?(ruby)
-  ruby_test = rvm_wrapper("if rvm list | grep -q '\(#{ruby} \)'; then echo 'true'; else echo 'false'; fi")
-  return capture(ruby_test).include?("true")
+  ruby_test = "source /etc/profile.d/rvm.sh && if rvm list | grep -q '#{ruby} '; then echo 'true'; else echo 'false'; fi"
+  return capture(rvm_wrapper(ruby_test)).include?("true")
 end
 
 def install_ruby(ruby, patch = nil)
@@ -66,7 +66,7 @@ def install_global_gem(ruby, gem)
 end
 
 def rvm_wrapper(command)
-  "bash -c '. /etc/profile.d/rvm.sh && #{command}'"
+  "bash -c \". /etc/profile.d/rvm.sh && #{command}\""
 end
 
 def gemrc
