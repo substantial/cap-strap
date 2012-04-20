@@ -43,15 +43,22 @@ def user_exists?(user)
 end
 
 def default_known_hosts
-  <<-TEXT
+<<TEXT
 github.com,207.97.227.239 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
-  TEXT
+TEXT
+end
+
+def ruby_installed?(ruby)
+  ruby_test = "source /etc/profile.d/rvm.sh && if rvm list | grep -q '#{ruby} '; then echo 'true'; else echo 'false'; fi"
+  return capture(rvm_wrapper(ruby_test)).include?("true")
 end
 
 def install_ruby(ruby, patch = nil)
-  command = "rvm install #{ruby}"
-  command << " --patch #{patch}" if patch
-  sudo rvm_wrapper(command)
+  unless ruby_installed?(ruby)
+    command = "rvm install #{ruby}"
+    command << " --patch #{patch}" if patch
+    sudo rvm_wrapper(command)
+  end
 end
 
 def install_global_gem(ruby, gem)
@@ -59,7 +66,7 @@ def install_global_gem(ruby, gem)
 end
 
 def rvm_wrapper(command)
-  "bash -c '. /etc/profile.d/rvm.sh && #{command}'"
+  "bash -c \". /etc/profile.d/rvm.sh && #{command}\""
 end
 
 def gemrc

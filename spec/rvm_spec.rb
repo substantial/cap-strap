@@ -22,8 +22,13 @@ describe Capistrano::RVM do
       @configuration.fetch(:gemset).should be
     end
 
-    it "defaults to empty ruby set" do
-      @configuration.fetch(:rubies).length.should be 0
+    it "has a rubie ruby set" do
+      @configuration.fetch(:rubies).length.should be 1
+    end
+
+    it "ruby is the default rubie" do
+      default_ruby = @configuration.fetch(:default_ruby)
+      @configuration.fetch(:rubies).first.should == default_ruby
     end
 
     it "has bundler in it's global gems" do
