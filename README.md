@@ -55,10 +55,13 @@ Note: Run from project root
 configuration.
 
 ### Testing with Vagrant
-You may test cap-strap on vagrant by running `bundle exec rake vagrant_test`.
 
 Vagrant will fetch a lucid-64 box and boot it up. Once started, it will run
 cap bootstrap on the vagrant box.
+
+To run: `bundle exec rake vagrant_test`
+
+To reload the box and run again: `bundle exec rake vagrant_test:restart`
 
 Vagrant Notes:
 
