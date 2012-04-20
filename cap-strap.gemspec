@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "cap-strap"
-  s.version     = "0.0.3"
+  s.version     = "0.0.4"
   s.authors     = ["Shaun Dern"]
   s.email       = ["shaun@substantial.com"]
   s.homepage    = "http://github.com/substantial/cap-strap"
