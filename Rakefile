@@ -1,7 +1,13 @@
 require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require 'rake/testtask'
 
-task :default => :spec
+Rake::TestTask.new do |t|
+  t.libs.push "lib"
+  t.test_files = FileList['spec/*_spec.rb']
+  t.verbose = true
+end
+
+task :default => :test
 
 desc "Test cap-strap on a local virtual machine, courtesy of vagrant."
 task :vagrant_test => ["vagrant_test:default"]
@@ -28,8 +34,4 @@ namespace :vagrant_test do
     %x[bundle exec vagrant up]
     puts "Vagrant is up."
   end
-end
-
-Rspec::Core::RakeTask.new do |t|
-  t.pattern = "./spec/*_spec.rb"
 end
