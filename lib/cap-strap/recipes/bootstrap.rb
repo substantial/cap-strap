@@ -2,7 +2,7 @@ require 'cap-strap/helpers'
 require 'cap-strap/recipes/rvm'
 require 'capistrano/cli'
 
-module Capistrano
+module Capistrano::CapStrap
   module Bootstrap
     def self.load_into(configuration)
       configuration.load do
@@ -28,6 +28,10 @@ module Capistrano
             bootstrap.add_known_hosts
             bootstrap.add_rvm_to_sudoers
             bootstrap.upload_deploy_key
+          end
+
+          task :set_deploy_ownership do
+            sudo "chown -R #{deploy_user}:#{group} #{deploy_to}"
           end
 
           task :create_deploy_user do
