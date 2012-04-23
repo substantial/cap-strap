@@ -1,6 +1,7 @@
 require 'cap-strap/helpers'
+require 'capistrano/cli'
 
-module Capistrano
+module Capistrano::CapStrap
   module RVM
     def self.load_into(configuration)
       configuration.load do

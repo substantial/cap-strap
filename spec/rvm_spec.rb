@@ -1,38 +1,36 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe Capistrano::RVM do
-  let(:ui) { double("ui", :ask => 'prompt') }
-  before do
-    @configuration = Capistrano::Configuration.new
-    @configuration.extend(Capistrano::Spec::ConfigurationExtension)
-    Capistrano::RVM.load_into(@configuration)
-    Capistrano::CLI.stub(:ui).and_return { ui }
-  end
+describe Capistrano::CapStrap::RVM do
+  load_capistrano_recipe(Capistrano::CapStrap::RVM)
 
   describe "default variables" do
+    let(:default_ruby) { "1.9.3-p125" }
+    before do
+      Capistrano::CLI.ui.stubs(:ask).returns('prompt')
+    end
+
     it "has a prompts for a bootstrap user" do
-      @configuration.fetch(:user).should == 'prompt'
+      recipe.fetch(:user).must_equal "prompt"
     end
 
     it "has a default ruby" do
-      @configuration.fetch(:default_ruby).should be
+      recipe.fetch(:default_ruby).must_equal default_ruby
     end
 
     it "has a default gemset" do
-      @configuration.fetch(:gemset).should be
+      recipe.fetch(:gemset).must_equal "global"
     end
 
     it "has a rubie ruby set" do
-      @configuration.fetch(:rubies).length.should be 1
+      recipe.fetch(:rubies).length.must_equal 1
     end
 
-    it "ruby is the default rubie" do
-      default_ruby = @configuration.fetch(:default_ruby)
-      @configuration.fetch(:rubies).first.should == default_ruby
+    it "default ruby is in rubies" do
+      recipe.fetch(:rubies).must_include default_ruby
     end
 
     it "has bundler in it's global gems" do
-      @configuration.fetch(:global_gems).include?("bundler").should == true
+      recipe.fetch(:global_gems).must_include 'bundler'
     end
   end
 end
