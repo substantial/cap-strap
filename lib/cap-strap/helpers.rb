@@ -9,9 +9,11 @@ def add_user_to_group(user, group)
 end
 
 def install_packages(packages)
-  sudo "apt-get update"
-  packages.each do |pkg|
-    sudo "apt-get -y install #{pkg}"
+  unless packages.empty?
+    sudo "apt-get update"
+    packages.each do |pkg|
+      sudo "apt-get -y install #{pkg}"
+    end
   end
 end
 
