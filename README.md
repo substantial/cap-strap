@@ -51,8 +51,13 @@ Note: Run from project root
 
 ## Testing
 
- We're https://github.com/technicalpickles/capistrano-spec for testing the capistrano
+ We're https://github.com/fnichol/minitest-capistrano for testing the capistrano
 configuration.
+
+Running Tests:
+
+* `rake test` - manually run the tests
+* `bundle exec guard start` - Use guard to watch for changes and run tests automatically.
 
 ### Testing with Vagrant
 
