@@ -18,6 +18,7 @@ module Capistrano::CapStrap
         _cset(:authorized_keys_file) { Capistrano::CLI.ui.ask("Location of authorized keys relative to root to upload: ") }
         _cset(:deploy_key_file) { Capistrano::CLI.ui.ask("Location of deploy key for upload, press enter to skip: ") }
         _cset(:known_hosts) { default_known_hosts }
+        _cset(:packages) { [] }
 
         namespace :bootstrap do
           desc "Bootstraps a fresh box. Install RVM, create the deploy user, upload keys."
@@ -28,10 +29,11 @@ module Capistrano::CapStrap
             bootstrap.add_known_hosts
             bootstrap.add_rvm_to_sudoers
             bootstrap.upload_deploy_key
+            bootstrap.install_specified_packages
           end
 
-          task :set_deploy_ownership do
-            sudo "chown -R #{deploy_user}:#{group} #{deploy_to}"
+          task :install_specified_packages do
+            install_packages(packages)
           end
 
           task :create_deploy_user do
