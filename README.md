@@ -28,6 +28,8 @@ You may re-run the deploy_key task by `$ cap <stage> bootstrap:upload_deploy_key
 
 In your deploy.rb, you may override the following variables:
 
+You may specificy any additional packages for installation by setting the :packages.
+
 Note: Paths are relative to the root
 
 * `set :deploy_user, "<name of user for future deployes>"`
@@ -44,6 +46,7 @@ Note: Paths are relative to the root
                 ]`
 * `set :gemset, "<default gemset>"` - Default is global
 * `set :global_gems, ["bundler", "other-gem"]` - Default is ["bundler"]
+* `set :packages, ["git", "vim"]` - default: []
 
 Note: Run from project root
 
