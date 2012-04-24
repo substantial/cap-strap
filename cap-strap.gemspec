@@ -3,12 +3,12 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "cap-strap"
-  s.version     = "0.0.6"
+  s.version     = "0.0.7"
   s.authors     = ["Shaun Dern"]
   s.email       = ["shaun@substantial.com"]
   s.homepage    = "http://github.com/substantial/cap-strap"
   s.summary     = %q{Bootstrap a new machine. Use with Capistrano to fully automate your provisioning.}
-  s.description = %q{Bootstrap a machine. Create a deploy user, upload authorized keys and deploy key. Uses RVM to install desired rubies, with patch support.}
+  s.description = %q{Bootstrap a machine. Install packages, create a deploy user, upload authorized keys and deploy key. Uses RVM to install desired rubies, with patch support.}
 
   s.rubyforge_project = "cap-strap"
 
