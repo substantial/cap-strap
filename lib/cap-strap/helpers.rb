@@ -85,3 +85,10 @@ def gemrc
 gem: --no-ri --no-rdoc
 TEXT
 end
+
+def make_directory(location, opts={})
+  sudo "mkdir -p #{location}"
+  if opts[:mode]
+    sudo "chmod #{opts[:mode]} #{location}"
+  end
+end

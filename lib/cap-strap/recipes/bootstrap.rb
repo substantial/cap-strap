@@ -50,8 +50,7 @@ module Capistrano::CapStrap
               puts "************Looking for Authorized Keys at: #{authorized_keys_path}"
               authorized_keys = File.read(authorized_keys_file)
               put(authorized_keys, "authorized_keys", :mode => "0600")
-              sudo "mkdir -p /home/#{deploy_user}/.ssh"
-              sudo "chmod 0700 /home/#{deploy_user}/.ssh"
+              make_directory("/home/#{deploy_user}/.ssh", :mode => "0700")
               sudo "mv ~/authorized_keys /home/#{deploy_user}/.ssh/"
               sudo "chown -R #{deploy_user}:rvm /home/#{deploy_user}/.ssh"
             rescue Exception => e
@@ -60,8 +59,8 @@ module Capistrano::CapStrap
           end
 
           task :add_known_hosts do
+            make_directory("/home/#{deploy_user}/.ssh", :mode => "0700")
             put(known_hosts, "known_hosts", :mode => "0644")
-            sudo "mkdir -p /home/#{deploy_user}/.ssh"
             sudo "mv ~/known_hosts /home/#{deploy_user}/.ssh/known_hosts"
             sudo "chown -R #{deploy_user}:rvm /home/#{deploy_user}/.ssh"
           end
@@ -84,8 +83,7 @@ module Capistrano::CapStrap
                 puts "************Looking for Deploy key at: #{deploy_key_path}"
                 id_rsa = File.read(deploy_key_path)
                 put(id_rsa, "id_rsa", :mode => "0600")
-                sudo "mkdir -p /home/#{deploy_user}/.ssh"
-                sudo "chmod 0700 /home/#{deploy_user}/.ssh"
+                make_directory("/home/#{deploy_user}/.ssh", :mode => "0700")
                 sudo "mv ~/id_rsa /home/#{deploy_user}/.ssh/"
                 sudo "chown -R #{deploy_user}:rvm /home/#{deploy_user}/.ssh"
               rescue Exception => e
