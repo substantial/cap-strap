@@ -4,8 +4,8 @@ server "localhost", :test
 
 set :port, 2222
 
-set :user, "vagrant"
-set :password, "vagrant"
+set :bootstrap_user, "vagrant"
+set :bootstrap_password, "vagrant"
 
 set :gemset, "build-agent"
 set :rubies, [
