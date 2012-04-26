@@ -26,6 +26,8 @@ module Capistrano::CapStrap
 
           desc "Bootstraps a fresh box. Install RVM, create the deploy user, upload keys."
           task :default do
+            set (:user) { bootstrap_user }
+            set (:password) { bootstrap_password }
             rvm.default
             bootstrap.create_deploy_user
             bootstrap.upload_deploy_authorized_keys
