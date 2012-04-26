@@ -3,6 +3,10 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe Capistrano::CapStrap::Bootstrap do
   load_capistrano_recipe(Capistrano::CapStrap::Bootstrap)
 
+  before do
+    Capistrano::CLI.ui.stubs(:ask).returns('prompt')
+  end
+
   describe "tasks" do
    it "has a default task" do
     recipe.must_have_task "bootstrap:default"
@@ -34,44 +38,35 @@ describe Capistrano::CapStrap::Bootstrap do
   end
 
   describe "default variables" do
-    before do
-      Capistrano::CLI.ui.stubs(:ask).returns('prompt')
+
+    it "bootstrap user" do
+      recipe.fetch(:bootstrap_user).must_equal 'prompt'
     end
 
-    it "prompts for a bootstrap user" do
-      recipe.fetch(:user).must_equal 'prompt'
+    it "bootstrap user password" do
+      recipe.fetch(:bootstrap_password).must_equal 'prompt'
     end
 
-    it "prompts for a deploy user" do
-      recipe.fetch(:deploy_user).must_equal 'prompt'
+    it "deploy user" do
+      recipe.fetch(:deploy_user).must_equal 'deploy'
     end
 
-    it 'prompts for authorized keys if no path set' do
-      recipe.fetch(:authorized_keys_file).must_equal 'prompt'
-    end
-
-    it "prompts for deploy key location if not set" do
-      recipe.fetch(:deploy_key_file).must_equal 'prompt'
-    end
-
-    it "packages is empty" do
+    it "packages" do
       recipe.fetch(:packages).must_be_empty
     end
   end
 
   describe "variables set" do
     before do
-      recipe.set(:user, "foo")
-      recipe.set(:deploy_user, "bar")
       recipe.set(:known_hosts, "baz")
     end
 
-    it "doesn't prompt for a bootstrap user" do
-      recipe.fetch(:user).must_equal "foo"
+    it "user gets bootstrap_user" do
+      recipe.fetch(:user).must_equal recipe.fetch(:bootstrap_user)
     end
 
-    it "doesn't prompt for a deploy user" do
-      recipe.fetch(:deploy_user).must_equal "bar"
+    it "password gets bootstrap_password" do
+      recipe.fetch(:password).must_equal recipe.fetch(:bootstrap_user)
     end
 
     it "replaces known_hosts with ones that are set" do
