@@ -38,7 +38,6 @@ describe Capistrano::CapStrap::Bootstrap do
   end
 
   describe "default variables" do
-
     it "bootstrap user" do
       recipe.fetch(:bootstrap_user).must_equal 'prompt'
     end
@@ -66,7 +65,7 @@ describe Capistrano::CapStrap::Bootstrap do
     end
 
     it "password gets bootstrap_password" do
-      recipe.fetch(:password).must_equal recipe.fetch(:bootstrap_user)
+      recipe.fetch(:password).must_equal recipe.fetch(:bootstrap_password)
     end
 
     it "replaces known_hosts with ones that are set" do
