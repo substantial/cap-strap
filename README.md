@@ -8,7 +8,6 @@ deploy key.
 
 Currently cap-strap has only been tested on Ubuntu 10.04 and 10.10.
 
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -21,10 +20,13 @@ And then execute:
 
 ## Usage
 
-You will be prompted for the name of the future deploy_user, location of authorized keys and
-the deploy user's deploy_key. Deploy key isn't required, and you may skip.
+####Upload deploy_key for deploy_user
+Set the relative path to the deploy_key and run:
+ `$ cap <stage> bootstrap:upload_deploy_key`
 
-You may re-run the deploy_key task by `$ cap <stage> bootstrap:upload_deploy_key`
+####Upload authorized keys for deploy_user
+Set the relative path to the deploy_key and run:
+  `$cap <stage> bootstrap:upload_authorized_keys`
 
 In your deploy.rb, you may override the following variables:
 
@@ -32,11 +34,13 @@ You may specificy any additional packages for installation by setting the :packa
 
 Note: Paths are relative to the root
 
-* `set :deploy_user, "<name of user for future deployes>"`
-* `set :authorized_keys_file, "<location of authorized keys>"`
-* `set :deploy_key_file, "<location of deploy-key>"`
-* `set :known_hosts, "<string of known hosts">` - Default is github.com
-* `set :default_ruby, "1.9.3-p125"` - Default is 1.9.3-p125
+* `set :bootstrap_user, "<name of root user for bootstraping>"` - default: prompt for user input
+* `set :bootstrap_password, "<password associated with the root user>"` - default: prompt for user input
+* `set :deploy_user, "<name of user for future deployes>"` - default: 'deploy'
+* `set :authorized_keys_file, "<location of authorized keys>"` - skips if not specified
+* `set :deploy_key_file, "<location of deploy-key>"` - skips if not specified
+* `set :known_hosts, "<string of known hosts">` - default: github.com
+* `set :default_ruby, "1.9.3-p125"` - default: '1.9.3-p125'
 * `set :rubies, [
                   "ree-1.8.7-2012.02",
                   {
@@ -44,13 +48,13 @@ Note: Paths are relative to the root
                     :patch => "falcon,debug --force-autoconf -j 3"
                   }
                 ]`
-* `set :gemset, "<default gemset>"` - Default is global
-* `set :global_gems, ["bundler", "other-gem"]` - Default is ["bundler"]
+* `set :gemset, "<default gemset>"` - default 'global'
+* `set :global_gems, ["bundler", "other-gem"]` - default: ["bundler"]
 * `set :packages, ["git", "vim"]` - default: []
 
 Note: Run from project root
 
-    $ cap <stage> bootstrap -s user=<root_username>
+    $ cap <stage> bootstrap
 
 ## Testing
 
