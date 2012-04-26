@@ -17,9 +17,12 @@ def install_packages(packages)
   end
 end
 
-def create_user(user)
+def create_user(user, password)
   unless user_exists?(user)
-    sudo "useradd -s /bin/bash -d /home/#{user} -m #{user}"
+    command = "useradd -s /bin/bash -d /home/#{user}"
+    command << " -p `perl -e 'print crypt(#{password}, salt)'`" if password
+    command << " -m #{user}"
+    sudo command
   end
 end
 

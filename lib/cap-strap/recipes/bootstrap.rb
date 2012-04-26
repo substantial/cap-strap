@@ -40,7 +40,7 @@ module Capistrano::CapStrap
           end
 
           task :create_deploy_user do
-            create_user(deploy_user)
+            create_user(deploy_user, deploy_user_password)
             add_user_to_group(deploy_user, "rvm")
             add_user_to_group(deploy_user, "admin")
           end

@@ -37,6 +37,7 @@ Note: Paths are relative to the root
 * `set :bootstrap_user, "<name of root user for bootstraping>"` - default: prompt for user input
 * `set :bootstrap_password, "<password associated with the root user>"` - default: prompt for user input
 * `set :deploy_user, "<name of user for future deployes>"` - default: 'deploy'
+* `set :deploy_user_password, "<password for deploy user>"` - default: skips. Recommend using authorized keys
 * `set :authorized_keys_file, "<location of authorized keys>"` - skips if not specified
 * `set :deploy_key_file, "<location of deploy-key>"` - skips if not specified
 * `set :known_hosts, "<string of known hosts">` - default: github.com

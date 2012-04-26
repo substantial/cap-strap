@@ -19,6 +19,7 @@ set :rubies, [
 set :default_ruby, "1.9.3-p125-perf"
 
 set :deploy_user, "deploy"
+set :deploy_user_password, "vagrant"
 set :group, "rvm"
 set :authorized_keys_file, "config/test-authorized-keys"
 set :deploy_key_file, "config/test-deploy-key"
