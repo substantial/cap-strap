@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "cap-strap"
-  s.version     = "0.0.8"
+  s.version     = "0.0.9"
   s.authors     = ["Shaun Dern"]
   s.email       = ["shaun@substantial.com"]
   s.homepage    = "http://github.com/substantial/cap-strap"
@@ -17,11 +17,12 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "minitest", "~> 2.12.0"
+  s.add_development_dependency "rake", "~> 0.9.2.2"
+  s.add_development_dependency "minitest", "~> 2.12.1"
   s.add_development_dependency "minitest-capistrano", "~> 0.0.8"
   s.add_development_dependency "minitest-colorize", "~> 0.0.4"
   s.add_development_dependency "guard-minitest", "~> 0.5.0"
-  s.add_development_dependency "mocha", "~> 0.11.1"
+  s.add_development_dependency "mocha", "~> 0.11.3"
   s.add_development_dependency "vagrant", "~> 1.0.2"
 
   s.add_dependency "capistrano", ">= 2.0.0"
