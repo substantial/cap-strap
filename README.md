@@ -34,24 +34,26 @@ You may specificy any additional packages for installation by setting the :packa
 
 Note: Paths are relative to the root
 
-* `set :bootstrap_user, "<name of root user for bootstraping>"` - default: prompt for user input
-* `set :bootstrap_password, "<password associated with the root user>"` - default: prompt for user input
-* `set :deploy_user, "<name of user for future deployes>"` - default: 'deploy'
-* `set :deploy_user_password, "<password for deploy user>"` - default: skips. Recommend using authorized keys
-* `set :authorized_keys_file, "<location of authorized keys>"` - skips if not specified
-* `set :deploy_key_file, "<location of deploy-key>"` - skips if not specified
-* `set :known_hosts, "<string of known hosts">` - default: github.com
-* `set :default_ruby, "1.9.3-p125"` - default: '1.9.3-p125'
-* `set :rubies, [
-                  "ree-1.8.7-2012.02",
-                  {
-                    :version => "1.9.3-p125-perf",
-                    :patch => "falcon,debug --force-autoconf -j 3"
-                  }
-                ]`
-* `set :gemset, "<default gemset>"` - default 'global'
-* `set :global_gems, ["bundler", "other-gem"]` - default: ["bundler"]
-* `set :packages, ["git", "vim"]` - default: []
+``` ruby
+set :bootstrap_user, "<name of root user for bootstraping>" # default: prompt for user input
+set :bootstrap_password, "<password associated with the root user>" # default: prompt for user input
+set :deploy_user, "<name of user for future deployes>" # default: 'deploy'
+set :deploy_user_password, "<password for deploy user>" # default: skips. Recommend using authorized keys
+set :authorized_keys_file, "<location of authorized keys>" # skips if not specified
+set :deploy_key_file, "<location of deploy-key>" # skips if not specified
+set :known_hosts, "<string of known hosts"> # default: github.com
+set :default_ruby, "1.9.3-p125" # default: '1.9.3-p125'
+set :rubies, [
+                "ree-1.8.7-2012.02",
+                {
+                  :version => "1.9.3-p125-perf",
+                  :patch => "falcon,debug --force-autoconf -j 3"
+                }
+              ]
+set :gemset, "<default gemset>" # default 'global'
+set :global_gems, ["bundler", "other-gem"] # default: ["bundler"]
+set :packages, ["git", "vim"] # default: []
+```
 
 Note: Run from project root
 
