@@ -62,7 +62,7 @@ def install_ruby(ruby, patch = nil)
   unless ruby_installed?(ruby)
     command = "rvm install #{ruby}"
     command << " --patch #{patch}" if patch
-    sudo rvm_wrapper(command)
+    sudo command
   end
 end
 
