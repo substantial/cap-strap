@@ -6,9 +6,9 @@ module Capistrano::CapStrap
     def self.load_into(configuration)
       configuration.load do
 
-        _cset :default_ruby , "1.9.3-p125"
+        _cset :default_ruby , "1.9.3"
         _cset :gemset, "global"
-        _cset :rubies, ["1.9.3-p125"]
+        _cset :rubies, ["1.9.3"]
         _cset(:user) { Capistrano::CLI.ui.ask("bootstrap root user: ") }
         _cset :global_gems, ["bundler"]
 
@@ -26,8 +26,7 @@ module Capistrano::CapStrap
           end
 
           task :install_system_wide_rvm do
-            command = "curl -L get.rvm.io | "
-            command << "#{sudo} bash -s stable"
+            command = "curl -L https://get.rvm.io | #{sudo} bash -s stable"
             run command
           end
 
@@ -48,11 +47,11 @@ module Capistrano::CapStrap
           end
 
           task :create_default_gemset do
-            run "#{sudo} #{rvm_wrapper("rvm use #{default_ruby}@#{gemset} --create")}"
+            run "#{sudo} #{RVM_PATH} use #{default_ruby}@#{gemset} --create"
           end
 
           task :set_default_ruby do
-            sudo rvm_wrapper("rvm use #{default_ruby} --default")
+            run "#{sudo} #{RVM_PATH} use #{default_ruby} --default"
           end
 
           task :add_user_to_rvm_group do
@@ -61,7 +60,7 @@ module Capistrano::CapStrap
 
           task :add_gemrc do
             put gemrc, "gemrc"
-            sudo "mv ~/gemrc /etc/"
+            run "#{sudo} mv ~/gemrc /etc/"
           end
         end
       end

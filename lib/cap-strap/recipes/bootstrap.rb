@@ -20,6 +20,8 @@ module Capistrano::CapStrap
           _cset(:bootstrap_password) { Capistrano::CLI.ui.ask("bootstrap root user password: ") }
           _cset(:known_hosts) { default_known_hosts }
           _cset(:packages) { [] }
+          _cset :authorized_keys_file, ""
+          _cset :deploy_key_file, ""
 
           set (:user) { bootstrap_user }
           set (:password) { bootstrap_password }

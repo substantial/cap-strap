@@ -1,3 +1,5 @@
+RVM_PATH = '/usr/local/rvm/bin/rvm'
+
 def _cset(name, *args, &block)
   unless exists?(name)
     set(name, *args, &block)
@@ -60,14 +62,14 @@ end
 
 def install_ruby(ruby, patch = nil)
   unless ruby_installed?(ruby)
-    command = "/usr/local/rvm/bin/rvm install #{ruby}"
+    command = "#{RVM_PATH} install #{ruby}"
     command << " --patch #{patch}" if patch
     run "#{sudo} #{command}"
   end
 end
 
 def install_global_gem(ruby, gem)
-  run "#{sudo} #{rvm_wrapper("rvm use #{ruby}@global --create && gem install #{gem} --no-rdoc --no-ri")}"
+  run "#{sudo} #{RVM_PATH} #{ruby}@global --create do gem install #{gem} --no-rdoc --no-ri"
 end
 
 def rvm_wrapper(command)
