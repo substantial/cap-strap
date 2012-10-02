@@ -97,3 +97,4 @@ def make_directory(location, opts={})
     run "#{sudo} chmod #{opts[:mode]} #{location}"
   end
 end
+
