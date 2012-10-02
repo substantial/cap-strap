@@ -27,7 +27,7 @@ module Capistrano::CapStrap
 
           task :install_system_wide_rvm do
             command = "curl -L get.rvm.io | "
-            command << "sudo bash -s stable"
+            command << "#{sudo} bash -s stable"
             run command
           end
 
@@ -48,7 +48,7 @@ module Capistrano::CapStrap
           end
 
           task :create_default_gemset do
-            sudo rvm_wrapper("rvm use #{default_ruby}@#{gemset} --create")
+            run "#{sudo} #{rvm_wrapper("rvm use #{default_ruby}@#{gemset} --create")}"
           end
 
           task :set_default_ruby do

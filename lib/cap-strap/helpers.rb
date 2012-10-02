@@ -5,14 +5,14 @@ def _cset(name, *args, &block)
 end
 
 def add_user_to_group(user, group)
-  sudo "usermod -a -G #{group} #{user}"
+  run "#{sudo} usermod -a -G #{group} #{user}"
 end
 
 def install_packages(packages)
   unless packages.empty?
-    sudo "apt-get update"
+    run "#{sudo} apt-get update"
     packages.each do |pkg|
-      sudo "apt-get -y install #{pkg}"
+      run "#{sudo} apt-get -y install #{pkg}"
     end
   end
 end
@@ -22,23 +22,23 @@ def create_user(user, password)
     command = "useradd -s /bin/bash -d /home/#{user}"
     command << " -p `perl -e 'print crypt(#{password}, salt)'`" if password
     command << " -m #{user}"
-    sudo command
+    run "#{sudo} #{command}"
   end
 end
 
 def add_group_to_sudoers(group)
   unless group_has_sudo?(group)
     puts "********* Adding #{group} to sudoers"
-    sudo "cp /etc/sudoers /etc/sudoers.bak"
-    sudo "chmod a+w /etc/sudoers.bak"
-    sudo "echo %rvm ALL=NOPASSWD:ALL >> /etc/sudoers.bak"
-    sudo "chmod a-w /etc/sudoers.bak"
-    sudo "mv /etc/sudoers.bak /etc/sudoers"
+    run "#{sudo} cp /etc/sudoers /etc/sudoers.bak"
+    run "#{sudo} chmod a+w /etc/sudoers.bak"
+    run "#{sudo} echo %rvm ALL=NOPASSWD:ALL >> /etc/sudoers.bak"
+    run "#{sudo} chmod a-w /etc/sudoers.bak"
+    run "#{sudo} mv /etc/sudoers.bak /etc/sudoers"
   end
 end
 
 def group_has_sudo?(group)
-  sudoer_test = "sudo bash -c \"if grep -Fxq '%#{group} ALL=NOPASSWD:ALL' /etc/sudoers; then echo 'true'; else echo 'false'; fi\""
+  sudoer_test = "#{sudo} bash -c \"if grep -Fxq '%#{group} ALL=NOPASSWD:ALL' /etc/sudoers; then echo 'true'; else echo 'false'; fi\""
   return capture(sudoer_test).include?("true")
 end
 
@@ -55,19 +55,19 @@ end
 
 def ruby_installed?(ruby)
   ruby_test = "source /etc/profile.d/rvm.sh && if rvm list | grep -q '#{ruby} '; then echo 'true'; else echo 'false'; fi"
-  return capture(rvm_wrapper(ruby_test)).include?("true")
+  return capture(ruby_test).include?("true")
 end
 
 def install_ruby(ruby, patch = nil)
   unless ruby_installed?(ruby)
     command = "/usr/local/rvm/bin/rvm install #{ruby}"
     command << " --patch #{patch}" if patch
-    sudo command
+    run "#{sudo} #{command}"
   end
 end
 
 def install_global_gem(ruby, gem)
-  sudo rvm_wrapper("rvm use #{ruby}@global --create && gem install #{gem} --no-rdoc --no-ri")
+  run "#{sudo} #{rvm_wrapper("rvm use #{ruby}@global --create && gem install #{gem} --no-rdoc --no-ri")}"
 end
 
 def rvm_wrapper(command)
@@ -90,8 +90,8 @@ TEXT
 end
 
 def make_directory(location, opts={})
-  sudo "mkdir -p #{location}"
+  run "#{sudo} mkdir -p #{location}"
   if opts[:mode]
-    sudo "chmod #{opts[:mode]} #{location}"
+    run "#{sudo} chmod #{opts[:mode]} #{location}"
   end
 end
