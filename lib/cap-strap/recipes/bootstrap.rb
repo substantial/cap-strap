@@ -17,19 +17,22 @@ module Capistrano::CapStrap
 
           _cset(:deploy_user, "deploy")
           _cset(:bootstrap_user) { Capistrano::CLI.ui.ask("bootstrap root user: ") }
-          _cset(:bootstrap_password) { Capistrano::CLI.ui.ask("bootstrap root user password: ") }
+          _cset(:bootstrap_password) { ''}
+          _cset(:bootstrap_keys) { [] }
           _cset(:known_hosts) { default_known_hosts }
           _cset(:packages) { [] }
           _cset :authorized_keys_file, ""
           _cset :deploy_key_file, ""
 
           set (:user) { bootstrap_user }
-          set (:password) { bootstrap_password }
+          set (:password) { bootstrap_password } unless bootstrap_password.empty?
+          ssh_options[:keys] = bootstrap_keys unless bootstrap_keys.empty?
 
           desc "Bootstraps a fresh box. Install RVM, create the deploy user, upload keys."
           task :default do
             set (:user) { bootstrap_user }
-            set (:password) { bootstrap_password }
+            set (:password) { bootstrap_password } unless bootstrap_password.empty?
+            ssh_options[:keys] = bootstrap_keys unless bootstrap_keys.empty?
             rvm.default
             bootstrap.create_deploy_user
             bootstrap.upload_deploy_authorized_keys

@@ -6,7 +6,7 @@ deploy key.
 
 ## Notes
 
-Currently cap-strap has only been tested on Ubuntu 10.04 and 10.10.
+Currently cap-strap has only been tested on Ubuntu 10.04 and 10.10, 12.04.
 
 ## Installation
 
@@ -36,7 +36,8 @@ Note: Paths are relative to the root
 
 ``` ruby
 set :bootstrap_user, "<name of root user for bootstraping>" # default: prompt for user input
-set :bootstrap_password, "<password associated with the root user>" # default: prompt for user input
+set :bootstrap_password, "<password associated with the root user>" # default: empty string
+set :bootstrap_keys, "<array containing path to ssh keys>" # default: empty array
 set :deploy_user, "<name of user for future deployes>" # default: 'deploy'
 set :deploy_user_password, "<password for deploy user>" # default: skips. Recommend using authorized keys
 set :authorized_keys_file, "<location of authorized keys>" # skips if not specified
