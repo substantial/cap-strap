@@ -22,7 +22,7 @@ end
 def create_user(user, password)
   unless user_exists?(user)
     command = "useradd -s /bin/bash -d /home/#{user}"
-    command << " -p `perl -e 'print crypt(#{password}, salt)'`" if password
+    command << " -p `perl -e 'print crypt(#{password}, salt)'`" unless password.empty?
     command << " -m #{user}"
     run "#{sudo} #{command}"
   end
