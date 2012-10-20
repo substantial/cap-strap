@@ -26,7 +26,7 @@ module Capistrano::CapStrap
           end
 
           task :install_system_wide_rvm do
-            command = "curl -L https://get.rvm.io | #{sudo} bash -s stable"
+            command = "curl -L https://get.rvm.io | #{sudo} bash -s stable --without-gems=\"rubygems-bundler\""
             run command
           end
 
