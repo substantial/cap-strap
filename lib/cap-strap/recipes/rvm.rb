@@ -26,7 +26,7 @@ module Capistrano::CapStrap
           end
 
           task :install_system_wide_rvm do
-            command = "curl -L https://get.rvm.io | #{sudo} bash -s stable"
+            command = "curl -L https://get.rvm.io | #{sudo} bash -s stable --without-gems=\"rubygems-bundler\""
             run command
           end
 
@@ -47,11 +47,11 @@ module Capistrano::CapStrap
           end
 
           task :create_default_gemset do
-            run "#{sudo} #{RVM_PATH} use #{default_ruby}@#{gemset} --create"
+            run "#{sudo} #{RVM_PATH} #{default_ruby} do rvm gemset create #{gemset}"
           end
 
           task :set_default_ruby do
-            run "#{sudo} #{RVM_PATH} use #{default_ruby} --default"
+            run "#{sudo} #{RVM_PATH} #{default_ruby} do rvm #{default_ruby} --default"
           end
 
           task :add_user_to_rvm_group do
