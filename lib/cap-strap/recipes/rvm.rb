@@ -47,7 +47,7 @@ module Capistrano::CapStrap
           end
 
           task :create_default_gemset do
-            run "#{sudo} #{RVM_PATH} use #{default_ruby}@#{gemset} --create"
+            run "#{sudo} #{RVM_PATH} #{default_ruby} do rvm gemset create #{gemset}"
           end
 
           task :set_default_ruby do
