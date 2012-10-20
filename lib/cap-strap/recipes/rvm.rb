@@ -51,7 +51,7 @@ module Capistrano::CapStrap
           end
 
           task :set_default_ruby do
-            run "#{sudo} #{RVM_PATH} use #{default_ruby} --default"
+            run "#{sudo} #{RVM_PATH} #{default_ruby} do rvm #{default_ruby} --default"
           end
 
           task :add_user_to_rvm_group do
