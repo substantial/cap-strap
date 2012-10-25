@@ -50,6 +50,8 @@ module Capistrano::CapStrap
           task :create_deploy_user do
             create_user(deploy_user, deploy_user_password)
             add_user_to_group(deploy_user, "rvm")
+            create_group("admin")
+            add_group_to_sudoers("admin")
             add_user_to_group(deploy_user, "admin")
           end
 

@@ -6,7 +6,12 @@ def _cset(name, *args, &block)
   end
 end
 
+def create_group(gropu)
+  run "#{sudo} grep '^admin:' /etc/group || groupadd admin"
+end
+
 def add_user_to_group(user, group)
+  create_group(group)
   run "#{sudo} usermod -a -G #{group} #{user}"
 end
 
@@ -33,7 +38,7 @@ def add_group_to_sudoers(group)
     puts "********* Adding #{group} to sudoers"
     run "#{sudo} cp /etc/sudoers /etc/sudoers.bak"
     run "#{sudo} chmod a+w /etc/sudoers.bak"
-    run "#{sudo} echo %rvm ALL=NOPASSWD:ALL >> /etc/sudoers.bak"
+    run "#{sudo} echo %#{group} ALL=NOPASSWD:ALL >> /etc/sudoers.bak"
     run "#{sudo} chmod a-w /etc/sudoers.bak"
     run "#{sudo} mv /etc/sudoers.bak /etc/sudoers"
   end
@@ -65,6 +70,21 @@ def install_ruby(ruby, patch = nil)
     command = "#{RVM_PATH} install #{ruby}"
     command << " --patch #{patch}" if patch
     run "#{sudo} #{command}"
+  end
+end
+
+def ruby_and_patch(ruby)
+  if ruby.is_a?(Hash)
+    [ruby.fetch(:version), ruby.fetch(:patch)]
+  else
+    [ruby, nil]
+  end
+end
+
+def install_ruby_and_gems(ruby, ruby_patch)
+  install_ruby(ruby, ruby_patch)
+  global_gems.each do |gem|
+    install_global_gem(ruby, gem)
   end
 end
 

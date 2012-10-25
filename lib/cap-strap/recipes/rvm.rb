@@ -20,8 +20,8 @@ module Capistrano::CapStrap
             rvm.install_system_wide_rvm
             rvm.add_gemrc
             rvm.add_user_to_rvm_group
+            rvm.install_default_ruby
             rvm.install_rubies
-            rvm.set_default_ruby
             rvm.create_default_gemset
           end
 
@@ -30,19 +30,22 @@ module Capistrano::CapStrap
             run command
           end
 
+          task :install_default_ruby do
+            rubies.each do |rubie|
+              ruby, ruby_patch = ruby_and_patch(rubie)
+              next unless ruby == default_ruby
+
+              install_ruby_and_gems(ruby, ruby_patch)
+              break
+            end
+          end
+          after "rvm:install_default_ruby", "rvm:set_default_ruby"
+
           task :install_rubies do
             rubies.each do |rubie|
-              if rubie.is_a?(Hash)
-                ruby = rubie.fetch(:version)
-                ruby_patch = rubie.fetch(:patch)
-              else
-                ruby = rubie
-                ruby_patch = nil
-              end
-              install_ruby(ruby, ruby_patch)
-              global_gems.each do |gem|
-                install_global_gem(ruby, gem)
-              end
+              ruby, ruby_patch = ruby_and_patch(rubie)
+
+              install_ruby_and_gems(ruby, ruby_patch)
             end
           end
 
