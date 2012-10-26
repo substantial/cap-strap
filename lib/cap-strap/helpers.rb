@@ -65,24 +65,25 @@ def ruby_installed?(ruby)
   return capture(ruby_test).include?("true")
 end
 
-def install_ruby(ruby, patch = nil)
+def install_ruby(ruby, patch = nil, options = nil)
   unless ruby_installed?(ruby)
-    command = "#{RVM_PATH} install #{ruby}"
+    command = "#{RVM_PATH} reinstall #{ruby}"
     command << " --patch #{patch}" if patch
+    command << " #{options}" if options
     run "#{sudo} #{command}"
   end
 end
 
 def ruby_and_patch(ruby)
   if ruby.is_a?(Hash)
-    [ruby.fetch(:version), ruby.fetch(:patch)]
+    [ruby.fetch(:version), ruby[:patch], ruby[:options]]
   else
-    [ruby, nil]
+    [ruby, nil, nil]
   end
 end
 
-def install_ruby_and_gems(ruby, ruby_patch)
-  install_ruby(ruby, ruby_patch)
+def install_ruby_and_gems(ruby, patch, options)
+  install_ruby(ruby, patch, options)
   global_gems.each do |gem|
     install_global_gem(ruby, gem)
   end

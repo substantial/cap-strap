@@ -26,16 +26,16 @@ module Capistrano::CapStrap
           end
 
           task :install_system_wide_rvm do
-            command = "curl -L https://get.rvm.io | #{sudo} bash -s stable --without-gems=\"rubygems-bundler\""
+            command = "curl -L https://get.rvm.io | #{sudo} bash -s head --without-gems=\"rubygems-bundler\""
             run command
           end
 
           task :install_default_ruby do
             rubies.each do |rubie|
-              ruby, ruby_patch = ruby_and_patch(rubie)
+              ruby, ruby_patch, ruby_options = ruby_and_patch(rubie)
               next unless ruby == default_ruby
 
-              install_ruby_and_gems(ruby, ruby_patch)
+              install_ruby_and_gems(ruby, ruby_patch, ruby_options)
               break
             end
           end
@@ -43,9 +43,9 @@ module Capistrano::CapStrap
 
           task :install_rubies do
             rubies.each do |rubie|
-              ruby, ruby_patch = ruby_and_patch(rubie)
+              ruby, ruby_patch, ruby_options = ruby_and_patch(rubie)
 
-              install_ruby_and_gems(ruby, ruby_patch)
+              install_ruby_and_gems(ruby, ruby_patch, ruby_options)
             end
           end
 
