@@ -11,6 +11,7 @@ module Capistrano::CapStrap
         _cset :rubies, ["1.9.3"]
         _cset(:user) { Capistrano::CLI.ui.ask("bootstrap root user: ") }
         _cset :global_gems, ["bundler"]
+        _cset :rvm_version, "stable"
 
         default_run_options[:shell] = '/bin/bash'
         default_run_options[:pty] = true
@@ -26,7 +27,7 @@ module Capistrano::CapStrap
           end
 
           task :install_system_wide_rvm do
-            command = "curl -L https://get.rvm.io | #{sudo} bash -s stable --without-gems=\"rubygems-bundler\""
+            command = "curl -L https://get.rvm.io | #{sudo} bash -s #{rvm_version} --without-gems=\"rubygems-bundler\""
             run command
           end
 
