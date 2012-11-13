@@ -1,4 +1,4 @@
-RVM_PATH = '/usr/local/rvm/bin/rvm'
+CAP_STRAP_RVM_PATH = '/usr/local/rvm/bin/rvm'
 
 def _cset(name, *args, &block)
   unless exists?(name)
@@ -67,7 +67,7 @@ end
 
 def install_ruby(ruby, patch = nil, options = nil)
   unless ruby_installed?(ruby)
-    command = "#{RVM_PATH} reinstall #{ruby}"
+    command = "#{CAP_STRAP_RVM_PATH} reinstall #{ruby}"
     command << " --patch #{patch}" if patch
     command << " #{options}" if options
     run "#{sudo} #{command}"
@@ -90,7 +90,7 @@ def install_ruby_and_gems(ruby, patch, options)
 end
 
 def install_global_gem(ruby, gem)
-  run "#{sudo} #{RVM_PATH} #{ruby}@global --create do gem install #{gem} --no-rdoc --no-ri"
+  run "#{sudo} #{CAP_STRAP_RVM_PATH} #{ruby}@global --create do gem install #{gem} --no-rdoc --no-ri"
 end
 
 def rvm_wrapper(command)

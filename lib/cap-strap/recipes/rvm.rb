@@ -50,11 +50,11 @@ module Capistrano::CapStrap
           end
 
           task :create_default_gemset do
-            run "#{sudo} #{RVM_PATH} #{default_ruby} do rvm gemset create #{gemset}"
+            run "#{sudo} #{CAP_STRAP_RVM_PATH} #{default_ruby} do rvm gemset create #{gemset}"
           end
 
           task :set_default_ruby do
-            run "#{sudo} #{RVM_PATH} #{default_ruby} do rvm #{default_ruby} --default"
+            run "#{sudo} #{CAP_STRAP_RVM_PATH} #{default_ruby} do rvm #{default_ruby} --default"
           end
 
           task :add_user_to_rvm_group do
